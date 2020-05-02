@@ -82,9 +82,12 @@ function populate_datalayer() {
 		array_push($post_tags, $t->name);
 	}
 	// populate user
-	$user = wp_get_current_user();
-	$auth_status = ($user->id > 0 ? 'logged-in' : 'logged-out');
-	$role = km_get_user_role( $user = $user->id );
+	global $blog_id;
+	$user = get_current_user_id();
+	$auth_status = ($user > 0 ? 'logged-in' : 'logged-out');
+	$role = km_get_user_role( $user = $user );
+	$blog_name = get_bloginfo( 'name' );
+	$hashed_id = hash('sha256', $user . '_' . $blog_name);
 	
 	?>
 	<script>
@@ -115,7 +118,8 @@ function populate_datalayer() {
 			},
 			'user': {
  				'auth' : '<?php echo $auth_status; ?>',
-				'role' : '<?php echo $role; ?>'
+				'role' : '<?php echo $role; ?>',
+				'hash_id' : '<?php echo $hashed_id; ?>'
 				},
 			'version': '1.0'
 			}
