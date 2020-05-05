@@ -38,4 +38,4 @@ digitalData ={
 ```
 ### How to use?:
 
-Just include the code ifrom [https://github.com/analista-digital/wp_dataLayer/blob/master/wp_dataLayer.php](wp_dataLayer.php) in the functions.php of your (child) theme.
+Just include the code from [wp_dataLayer.php](https://github.com/analista-digital/wp_dataLayer/blob/master/wp_dataLayer.php) in the functions.php of your (child) theme.
