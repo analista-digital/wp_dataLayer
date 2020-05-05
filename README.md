@@ -1,6 +1,7 @@
 This php code creates a digitalData variable in any Wordpress instalation. The digitalData dataLayer follows the recommendation of the World Wide Web Consortium for creating a customer experience digital data schema. Those recomendations are written in [this pdf](https://www.w3.org/2013/12/ceddl-201312.pdf). The document is not actual (from 2013) but it is the last (and only) version. Therefore there are some recomendations for user object that I just removed. Those are the ones containing any kind of PII
 
 ### Example of output:
+
 ```javascript
 digitalData ={
    "pageInstanceID":"155-Usando_emojis_en_nuestros_nombres_de_segmento-publish",
@@ -35,3 +36,6 @@ digitalData ={
    "version":"1.0"
 }
 ```
+### How to use?:
+
+Just include the code ifrom [https://github.com/analista-digital/wp_dataLayer/blob/master/wp_dataLayer.php](wp_dataLayer.php) in the functions.php of your (child) theme.
