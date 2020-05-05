@@ -8,8 +8,8 @@ digitalData ={
       "pageInfo":{
          "pageID":"155",
          "pageName":"Usando emojis en nuestros nombres de segmento",
-         "destinationURL":"document.location.href",
-         "referringURL":"document.referrer",
+         "destinationURL":"https://analista-digital.com/ideas-y-consejos/usando-emojis-en-nuestros-nombres-de-segmento/",
+         "referringURL":"https://analista-digital.com/",
          "sysEnv":"desktop",
          "variant":"",
          "version":"040520_545",
@@ -19,12 +19,12 @@ digitalData ={
          "language":"es_ES"
       },
       "category":{
-         "categories":"[{\"id\":13,\"name\":\"Ideas y Consejos\",\"slug\":\"ideas-y-consejos\"}]",
-         "primaryCategory":"[{\"id\":13,\"name\":\"Ideas y Consejos\",\"slug\":\"ideas-y-consejos\"}]",
+         "categories":"[{"id":13,"name":"Ideas y Consejos","slug":"ideas-y-consejos"}]",
+         "primaryCategory":"[{"id":13,"name":"Ideas y Consejos","slug":"ideas-y-consejos"}]",
          "pageType":"post"
       },
       "tag":{
-         "tags":"[]"
+         "tags":"["emojis","segments"]"
       }
    },
    "user":{
