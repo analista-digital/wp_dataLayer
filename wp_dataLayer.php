@@ -34,7 +34,7 @@ function get_post_primary_category($post_id, $term='category', $return_all_categ
     return $return;
 }
 
-// function needed to obtain primary category
+// function needed to obtain user role
 // published on https://kellenmace.com/get-current-users-role-in-wordpress/
 function km_get_user_role( $user = null ) {
  $user = $user ? new WP_User( $user ) : wp_get_current_user();
@@ -67,14 +67,9 @@ function populate_datalayer() {
 		$cat = get_category( $c );
 		$cats[] = array( 'id' => $c, 'name' => $cat->name, 'slug' => $cat->slug );
 	}
-	$post_categories = get_post_primary_category($postid, 'category'); 
-	$primary_category = $post_categories['primary_category'];
-	$prim_cat = array();
-	if (!empty($primary_category)) {
-		foreach($primary_category as $p){
-			$prim_cat[] = array( 'id' => $primary_category->term_id, 'name' => $primary_category->name, 'slug' => $primary_category->slug );
-		}
-	}
+	$primary_cats =  get_the_category();
+    $primary_cat = array();
+	$primary_cat[] =  array( 'id' => $primary_cats[0]->term_id, 'name' => $primary_cats[0]->name, 'slug' => $primary_cats[0]->slug );
 	$post_type = get_post_type($postid);
 	$tags = wp_get_post_tags($postid);
 	$post_tags = [];
@@ -97,8 +92,8 @@ function populate_datalayer() {
  				'pageInfo': {
  					'pageID': '<?php echo $postid; ?>',
 					'pageName': '<?php echo get_the_title($postid); ?>',
-					'destinationURL': document.location.href,
-					'referringURL': document.referrer,
+					'destinationURL': '<? echo get_permalink( $postid ) ?: 'unknown/refresh'; ?>',
+					'referringURL': '<? echo wp_get_referer(); ?>',
 					'sysEnv' : '<?php echo $sys_env; ?>',
 					'variant' : '',
 					'version' : '<?php echo $post_version; ?>',
@@ -109,7 +104,7 @@ function populate_datalayer() {
 					},
 				'category': {
  					'categories' : '<?php echo json_encode($cats); ?>',
-					'primaryCategory' : '<?php echo json_encode($prim_cat); ?>',
+					'primaryCategory' : '<?php echo json_encode($primary_cat); ?>',
 					'pageType' : '<?php echo $post_type; ?>'
 					},
 				'tag': {
