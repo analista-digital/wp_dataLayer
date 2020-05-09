@@ -1,4 +1,19 @@
 <?php
+// This function is needed to delete all between the <pre> tags in Post Content (code)
+// people normally do not read code, just copy it, and keeping it as post content will alter
+// the calculation for the seconds needed to read the post
+// Source: https://stackoverflow.com/questions/13031250/php-function-to-delete-all-between-certain-characters-in-string
+function delete_all_between($beginning, $end, $string) {
+  $beginningPos = strpos($string, $beginning);
+  $endPos = strpos($string, $end);
+  if ($beginningPos === false || $endPos === false) {
+    return $string;
+  }
+  $textToDelete = substr($string, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
+  return delete_all_between($beginning, $end, 
+							str_replace($textToDelete, '', $string)); // recursion to ensure all occurrences are replaced
+}
+
 // function needed to obtain primary category
 // published on https://www.lab21.gr/blog/wordpress-get-primary-category-post/
 function get_post_primary_category($post_id, $term='category', $return_all_categories=false){
@@ -40,6 +55,17 @@ function km_get_user_role( $user = null ) {
  $user = $user ? new WP_User( $user ) : wp_get_current_user();
 
  return $user->roles ? $user->roles[0] : 'guest';
+}
+
+//estimate the reading time depending of the words and the images of a post
+function est_reading_time_seconds() {
+$content = get_post_field('post_content', $post->ID);
+$coded_removed = delete_all_between('<pre', '</pre>', $content);
+$text_content =  str_word_count(strip_tags($coded_removed));
+$media_content = count(get_attached_media('image', $post->ID));
+$text_reading_time = ceil($text_content/ 3.33);
+$media_visualization_time = $media_content * 10;
+return ($text_reading_time + $media_visualization_time);
 }
 
 // Fill initial digitalData with information from WordPress
@@ -100,7 +126,8 @@ function populate_datalayer() {
 					'author' : '<?php echo $post_author; ?>',
 					'creationDate' : '<?php echo $published_date; ?>',
 					'modificationnDate' : '<?php echo $modified_date; ?>',
-					'language' : '<?php echo $language; ?>'
+					'language' : '<?php echo $language; ?>',
+					'estReadTimeSecs': '<? echo est_reading_time_seconds() ?: ''; ?>'
 					},
 				'category': {
  					'categories' : '<?php echo json_encode($cats); ?>',
