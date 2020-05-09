@@ -89,19 +89,31 @@ function populate_datalayer() {
 	$language = get_locale();
 	// populate category
 	$categories_ids = wp_get_post_categories($postid);
-	$cats = array();
-	foreach($categories_ids as $c){
-		$cat = get_category( $c );
-		$cats[] = array( 'id' => $c, 'name' => $cat->name, 'slug' => $cat->slug );
+	if (empty($categories_ids)) {
+		$cats = 'no categories';
+	} else {
+		$cats = array();
+		foreach($categories_ids as $c) {
+			$cat = get_category( $c );
+			$cats[] = array( 'id' => $c, 'name' => $cat->name, 'slug' => $cat->slug );
+		}
 	}
 	$primary_cats =  get_the_category();
-    $primary_cat = array();
-	$primary_cat[] =  array( 'id' => $primary_cats[0]->term_id, 'name' => $primary_cats[0]->name, 'slug' => $primary_cats[0]->slug );
+	if (empty($primary_cats)) {
+		$primary_cat = 'no category';
+	} else {
+		$primary_cat = array();
+		$primary_cat[] = array( 'id' => $primary_cats[0]->term_id, 'name' => $primary_cats[0]->name, 'slug' => $primary_cats[0]->slug);
+	}
 	$post_type = get_post_type($postid);
 	$tags = wp_get_post_tags($postid);
-	$post_tags = [];
-	foreach($tags as $t){
-		array_push($post_tags, $t->name);
+	if (empty($tags)) {
+		$post_tags = 'no tags';
+	} else {
+		$post_tags = [];
+		foreach($tags as $t) {
+			array_push($post_tags, $t->name);
+		}	
 	}
 	// populate user
 	global $blog_id;
@@ -131,12 +143,12 @@ function populate_datalayer() {
 					'estReadTimeSecs': '<? echo est_reading_time_seconds() ?: ''; ?>'
 					},
 				'category': {
- 					'categories' : '<?php echo json_encode($cats); ?>',
-					'primaryCategory' : '<?php echo json_encode($primary_cat); ?>',
+ 					'categories' : '<?php echo is_array($cats) ? json_encode($cats) : $cats; ?>',
+					'primaryCategory' : '<?php echo is_array($primary_cat) ? json_encode($primary_cat) : $primary_cat; ?>',
 					'pageType' : '<?php echo $post_type; ?>'
 					},
 				'tag': {
- 					'tags' : '<?php echo json_encode($post_tags); ?>'
+ 					'tags' : '<?php echo is_array($post_tags) ? json_encode($post_tags) : $post_tags; ?>'
 					}
 			},
 			'user': {
