@@ -59,13 +59,14 @@ function km_get_user_role( $user = null ) {
 
 //estimate the reading time depending of the words and the images of a post
 function est_reading_time_seconds() {
-$content = get_post_field('post_content', $post->ID);
-$coded_removed = delete_all_between('<pre', '</pre>', $content);
-$text_content =  str_word_count(strip_tags($coded_removed));
-$media_content = count(get_attached_media('image', $post->ID));
-$text_reading_time = ceil($text_content/ 3.33);
-$media_visualization_time = $media_content * 10;
-return ($text_reading_time + $media_visualization_time);
+	global $post;
+	$content = get_post_field('post_content', $post->ID);
+	$coded_removed = delete_all_between('<pre', '</pre>', $content);
+	$text_content =  str_word_count(strip_tags($coded_removed));
+	$media_content = count(get_attached_media('image', $post->ID));
+	$text_reading_time = ceil($text_content/ 3.33);
+	$media_visualization_time = $media_content * 10;
+	return ($text_reading_time + $media_visualization_time);
 }
 
 // Fill initial digitalData with information from WordPress
