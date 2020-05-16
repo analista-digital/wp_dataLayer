@@ -140,7 +140,7 @@ function populate_datalayer() {
 					'creationDate' : '<?php echo $published_date; ?>',
 					'modificationnDate' : '<?php echo $modified_date; ?>',
 					'language' : '<?php echo $language; ?>',
-					'estReadTimeSecs': '<? echo est_reading_time_seconds() ?: ''; ?>'
+					'estReadTimeSecs': <? echo est_reading_time_seconds() ?: ''; ?>
 					},
 				'category': {
  					'categories' : '<?php echo is_array($cats) ? json_encode($cats) : $cats; ?>',
