@@ -83,7 +83,7 @@ function populate_datalayer() {
 	$is_mobile = wp_is_mobile();
 	$sys_env = ($is_mobile == true ? 'mobile' : 'desktop');
 	$post_version = get_the_modified_date('dmy'). '_' . get_the_modified_time('gi');
-	$post_author = get_the_author_meta( 'nickname', $author_id );
+	$post_author = strtolower(get_the_author_meta('nickname', $author_id));
 	$published_date = get_the_date('Y-m-d');
 	$modified_date = get_the_modified_date('Y-m-d');
 	$language = get_locale();
